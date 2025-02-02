@@ -9,19 +9,19 @@ app.use(express.json());
 
 app.get('/api/classify-number', async (req, res) => {
     try {
-        const query = req.query;
+        const number = req.query.number;
 
-        if (Object.keys(query).length !== 1) {
-            return res.status(400).json({ message: 'Please provide only one parameter (positive integer) for you query', error: true });
-        }
-        if (query.number === undefined) {
-            return res.status(400).json({ message: 'Please provide a number as a query for your api', error: true });
-        }
-        if (query.number < 0) {
-            return res.status(400).json({ message: 'Please provide a positive number', error: true });
-        }
+        // if (Object.keys(query).length !== 1) {
+        //     return res.status(400).json({ message: 'Please provide only one parameter (positive integer) for you query', error: true });
+        // }
+        // if (query.number === undefined) {
+        //     return res.status(400).json({ message: 'Please provide a number as a query for your api', error: true });
+        // }
+        // if (query.number < 0) {
+        //     return res.status(400).json({ message: 'Please provide a positive number', error: true });
+        // }
 
-        const number = query.number;
+        // const number = query.number;
 
         if (typeof number !== 'number' && isNaN(number)) {
             return res.status(400).json({ number: null, error: true });
