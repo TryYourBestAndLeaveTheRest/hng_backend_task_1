@@ -24,7 +24,7 @@ app.get('/api/classify-number', async (req, res) => {
         const number = query.number;
 
         if (typeof number !== 'number' && isNaN(number)) {
-            return res.status(400).json({ number: 'alphabet', error: true });
+            return res.status(400).json({ number, error: true });
         }
 
         const is_prime = isPrime(number);
