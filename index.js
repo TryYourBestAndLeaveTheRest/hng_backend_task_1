@@ -1,14 +1,13 @@
 const express = require('express');
 require('dotenv').config();
+const isPrime = require('./helpers/isPrime');
+const isPerfect = require('./helpers/isPerfect');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-app.get('/', (req, res) => {
-    console.log(req.query);
-    res.end();
-
+app.get('/api/classify-number', (req, res) => {
 });
 
 app.listen(PORT, () => {
