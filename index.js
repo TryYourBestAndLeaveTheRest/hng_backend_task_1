@@ -4,9 +4,9 @@ const { isPerfect, isPrime, isArmstrong } = require('./helpers/helpers');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
+console.log(isNaN('9'))
 app.use(express.json());
-app.get('/api/classify-number', (req, res) => {
+app.get('/api/classify-number', async (req, res) => {
     try {
 
         const query = req.query;
@@ -20,6 +20,9 @@ app.get('/api/classify-number', (req, res) => {
             return res.status(400).json({ message: 'Please provide a positive number' });
         }
         const number = query.number;
+        if (typeof number !== 'number' && isNaN(number)) {
+            return res.status(400).json({ number: 'Alphabet', error: true });
+        }
         const is_prime = isPrime(number);
         const is_perfect = isPerfect(number);
         const properties = [];
@@ -32,20 +35,24 @@ app.get('/api/classify-number', (req, res) => {
         if (number % 2 === 0) {
             properties.push('even');
         }
-        const digit_sum = num.toString().split('').map(Number).reduce((acc, curr) => acc + curr, 0);
-
-        res.status(200).json({ number, is_prime, is_perfect, properties, digit_sum });
+        const digit_sum = number.toString().split('').map(Number).reduce((acc, curr) => acc + curr, 0);
+        // console.log('i get here')
+        const response = await fetch(`http://numbersapi.com/${number}`);
+        if (!response.ok) {
+            throw new Error('Error fetching data');
+        }
+        const fun_fact = await response.text();
+        res.status(200).json({ number, is_prime, is_perfect, properties, digit_sum, fun_fact });
     } catch (error) {
-        res.status(`500`).json({ message: 'Internal server error' });
+        res.status(500).json({ message: 'Internal server error', error });
     }
 });
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 })
-const obj = { fi: 'sh', se: 'co', th: 'de' };
 
-
+// getUrl(2).then(res => console.log(res));
 //api/classify-number?number=371
 
 /*
