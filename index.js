@@ -35,7 +35,7 @@ app.get('/api/classify-number', async (req, res) => {
         if (number % 2 !== 0) properties.push('odd');
         if (number % 2 === 0) properties.push('even');
 
-        const digit_sum = number.toString().split('').map(Number).reduce((acc, curr) => acc + curr, 0);
+        const digit_sum = Math.abs(number).toString().split('').map(Number).reduce((acc, curr) => acc + curr, 0);
 
         const response = await fetch(`http://numbersapi.com/${number}/math`);
         if (!response.ok) {
