@@ -25,5 +25,6 @@ const isArmstrong = (num) => {
     return sum === num;
 }
 
+const isFloat = (value) => typeof value === 'number' && !Number.isInteger(value);
 
-module.exports = { isPerfect, isPrime, isArmstrong };
+module.exports = { isPerfect, isPrime, isArmstrong, isFloat };

@@ -1,6 +1,6 @@
 const express = require('express');
 require('dotenv').config();
-const { isPerfect, isPrime, isArmstrong } = require('./helpers/helpers');
+const { isPerfect, isPrime, isArmstrong, isFloat } = require('./helpers/helpers');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -26,7 +26,9 @@ app.get('/api/classify-number', async (req, res) => {
         if (typeof number !== 'number' && isNaN(number)) {
             return res.status(400).json({ number: null, error: true });
         }
-
+        if (isFloat(number)) {
+            return res.status(400).json({ number: null, error: true });
+        }
         const is_prime = isPrime(number);
         const is_perfect = isPerfect(number);
         const properties = [];
@@ -48,7 +50,8 @@ app.get('/api/classify-number', async (req, res) => {
         res.status(500).json({ message: 'Internal server error', error });
     }
 });
-
+console.log(typeof 5.3);
+// console.log(isPrime(5.3));
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 })
