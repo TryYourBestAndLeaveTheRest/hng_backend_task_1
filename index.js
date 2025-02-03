@@ -37,7 +37,7 @@ app.get('/api/classify-number', async (req, res) => {
 
         const digit_sum = number.toString().split('').map(Number).reduce((acc, curr) => acc + curr, 0);
 
-        const response = await fetch(`http://numbersapi.com/${number}`);
+        const response = await fetch(`http://numbersapi.com/${number}/math`);
         if (!response.ok) {
             throw new Error('Error fetching data');
         }
